@@ -1,0 +1,25 @@
+#!/bin/sh
+case "$1" in
+    -nu)
+        printf '%s\n' "foo-1.2.3_1 hold foo-1.2.3_2"
+        exit 0
+        ;;
+    -S)
+        echo "Synchronizing..."
+        echo "1 downloaded, 1 installed, 0 updated, 1 configured, 0 removed, 0 on hold."
+        exit 0
+        ;;
+    *)
+        echo "Fetching packages..."
+        sleep 1
+        printf 'Do you want to continue? [Y/n] '
+        IFS= read -r ans <&0 || ans=
+        echo
+        printf "Installing %s ...\n" "$1"
+        printf 'downloading   50%%\r'; sleep 1
+        printf 'downloading  100%% \r'; echo
+        echo "3 downloaded, 1 installed, 0 updated, 1 configured, 0 removed, 0 on hold."
+        sleep 0.4
+        exit 0
+        ;;
+esac

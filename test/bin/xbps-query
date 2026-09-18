@@ -1,0 +1,44 @@
+#!/bin/sh
+# Fake xbps-query for smoke-testing the TUI without a real XBPS install.
+if [ "$1" = "-V" ]; then
+    echo "xbps-query (XBPS) 0.59"
+    exit 0
+fi
+case " $* " in
+    *" -l "*)
+        printf '%s\n' \
+            "ii foo-1.2.3_1 The best little package" \
+            "ii bar-2.0_1 Another package for testing" \
+            "ii libfake-0.9_1 A library package" \
+            "ii zz-editor-5.1_2 fancy text editor"
+        exit 0
+        ;;
+    *" -O "*)
+        printf '%s\n' "orphanpkg-0.5_2 an orphan package"
+        exit 0
+        ;;
+    *" -Rs "*)
+        printf '%s\n' \
+            "ii foo-1.2.3_1 The best little package" \
+            "ii htop-3.3.0_1 interactive process viewer" \
+            "ii libnew-2.0_1 a new library"
+        exit 0
+        ;;
+esac
+case "$1" in
+    --property)
+        if [ "$3" = "installed_size" ]; then echo "1234567"; exit 0; fi
+        if [ "$3" = "repository" ]; then echo "mainrepo"; exit 0; fi
+        echo ""
+        exit 0
+        ;;
+    -f*|-x*|-X*)
+        case "$1" in
+            -f*) printf '%s\n' "/usr/bin/foo" "/usr/share/foo/data.txt" "/usr/include/foo.h" ;;
+            -x*) echo "libz>=1.0" ;;
+            -X*) echo "otherpkg" ;;
+        esac
+        exit 0
+        ;;
+esac
+exit 0

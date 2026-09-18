@@ -1,0 +1,4 @@
+#!/bin/sh
+echo "Removing $1..."
+echo "1 downloaded, 0 installed, 0 updated, 0 configured, 1 removed, 0 on hold."
+exit 0
