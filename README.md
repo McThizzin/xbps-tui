@@ -52,13 +52,14 @@ The program refuses to start if `xbps-query` cannot be run.
 | **^R** | remove the selected package |
 | **^K** | kill the selected package (`xbps-remove -R`, removes dependencies too) |
 | **^U** | upgrade the selected package (upgradeable list) |
+| **^A** | upgrade all upgradeable packages (upgradeable list) |
 | Tab | install the selected package (installable lists) |
 | **^F** | other functions |
 | Esc | cancel a menu / clear a filter |
 
 The **^F** menu provides:
 
-- **Synchronize** (`xbps-install -S`) — refresh the repository databases; use it once a session
+- **Synchronize** (`xbps-install -S`) — refresh the repository databases; it also runs automatically at startup
 - **Show size** — compute installed size for the visible packages
 
 Removing, killing, upgrading, installing, and synchronizing run the real

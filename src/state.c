@@ -28,7 +28,7 @@ const char *list_kind_desc[6] = {
     "Installed !orphans (^R remove, ^K kill)",
     "Installable (repository) (^I install)",
     "Installable (!repository) w/o libs (^I install)",
-    "!Upgradeable packages (^U upgrade)"
+    "!Upgradeable packages (^U upgrade, ^A upgrade all)"
 };
 
 volatile sig_atomic_t g_resized = 0;

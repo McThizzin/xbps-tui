@@ -37,6 +37,7 @@ extern const char *list_kind_desc[6];
 #define K_REMOVE     0x12 /* ^R */
 #define K_KILL       0x0b /* ^K */
 #define K_UPGRADE    0x15 /* ^U */
+#define K_UPGRADEALL 0x01 /* ^A */
 #define K_INFO       0x10 /* ^P */
 #define K_FUNCTION   0x06 /* ^F */
 #define K_FILTNAME   0x0e /* ^N */

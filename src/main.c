@@ -24,6 +24,18 @@
 #include "util.h"
 #include "xbps.h"
 
+static void sync_repos(void) {
+    scrnew("SYNCHRONIZE (update the local database of packages in repositories)",
+           "Invoked: xbps-install -S");
+    char *argv[] = { "xbps-install", "-S", NULL };
+    char **sudoargv = sudo_wrap(argv);
+    char *lastline = run_interactive_lastline(sudoargv);
+    free(sudoargv);
+    if (lastline && lastline[0]) printw("\n%s\n", lastline);
+    free(lastline);
+    pressakey();
+}
+
 int main(void) {
     if (!check_xbps_available()) {
         fprintf(stderr,
@@ -60,6 +72,7 @@ int main(void) {
 
     getmaxyx(stdscr, screen_height, screen_width);
 
+    sync_repos();
     reload_pl();
 
     for (;;) {
@@ -289,6 +302,20 @@ int main(void) {
             inp = 0;
         }
 
+        if (inp == K_UPGRADEALL && list_kind == 5) {
+            scrnew("Upgrade all packages", "Invoked: xbps-install -u");
+            char *argv[] = { "xbps-install", "-u", NULL };
+            char **sudoargv = sudo_wrap(argv);
+            char *lastline = run_interactive_lastline(sudoargv);
+            free(sudoargv);
+            if (lastline && lastline[0]) printw("\n%s\n", lastline);
+            free(lastline);
+            pressakey();
+            reload_pl();
+            if (pack_curr > pack_maxn) pack_curr = pack_maxn;
+            inp = 0;
+        }
+
         if (inp == K_INFO && pack_maxn >= 0) {
             char *mypack = strdup(view.items[pack_curr].name);
             char *mydesc = strdup(view.items[pack_curr].desc);
@@ -433,14 +460,7 @@ int main(void) {
             };
             int sel = choosemenu(36, 4, "Choose extended function: ", funcs, 2, redowin);
             if (sel == 1) {
-                scrnew("SYNCHRONIZE (update the local database of packages in repositories)", "Invoked: xbps-install -S");
-                char *argv[] = { "xbps-install", "-S", NULL };
-                char **sudoargv = sudo_wrap(argv);
-                char *lastline = run_interactive_lastline(sudoargv);
-                free(sudoargv);
-                if (lastline && lastline[0]) printw("\n%s\n", lastline);
-                free(lastline);
-                pressakey();
+                sync_repos();
                 reload_pl();
                 if (pack_curr > pack_maxn) pack_curr = pack_maxn;
             } else if (sel == 2) {

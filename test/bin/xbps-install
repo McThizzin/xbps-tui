@@ -9,6 +9,11 @@ case "$1" in
         echo "1 downloaded, 1 installed, 0 updated, 1 configured, 0 removed, 0 on hold."
         exit 0
         ;;
+    -u)
+        echo "Upgrading all packages..."
+        echo "3 downloaded, 0 installed, 3 updated, 0 configured, 0 removed, 0 on hold."
+        exit 0
+        ;;
     *)
         echo "Fetching packages..."
         sleep 1
